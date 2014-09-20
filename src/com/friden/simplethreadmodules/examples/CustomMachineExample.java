@@ -1,5 +1,6 @@
 package com.friden.simplethreadmodules.examples;
 
+import com.friden.simplethreadmodules.Machineable;
 import com.friden.simplethreadmodules.SecureStash;
 import com.friden.simplethreadmodules.Stasher;
 
@@ -18,7 +19,7 @@ public class CustomMachineExample {
 	
 	}
 	
-	private static class IncDecIncToStringMachine {
+	private static class IncDecIncToStringMachine implements Machineable<Integer, String>{
 		
 		/* our factory consists of 5 workers */
 		
@@ -43,8 +44,19 @@ public class CustomMachineExample {
 			w0 = new IncrementWorker(w1, 1, true);
 		}
 		
+		@Override
 		public String make(Integer in){
 			w0.push(in);
+			return results.pull();
+		}
+
+		@Override
+		public void add(Integer in) {
+			w0.push(in);
+		}
+
+		@Override
+		public String get() {
 			return results.pull();
 		}
 		

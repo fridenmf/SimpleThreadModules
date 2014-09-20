@@ -1,6 +1,6 @@
 package com.friden.simplethreadmodules;
 
-public class Machine<M, N> {
+public class Machine<M, N> implements Machineable<M, N>{
 	
 	private ConsumerProducer<M, ?> first = null;
 	
@@ -15,18 +15,18 @@ public class Machine<M, N> {
 		last.nextModule = storer;
 	}
 	
-	/** Feeds the machine and waits for the results, returns it when it arrives */
+	@Override
 	public N make(M in){
 		first.push(in);
 		return result.pull();
 	}
 
-	/** Feeds the machine but lefts the result in the machine */
+	@Override
 	public void add(M in){
 		first.push(in);
 	}
 	
-	/** Waits for a result to arrive, and takes it when it does */
+	@Override
 	public N get(){
 		return result.pull();
 	}
