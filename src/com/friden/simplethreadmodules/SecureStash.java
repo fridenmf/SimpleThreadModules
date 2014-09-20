@@ -4,14 +4,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
-public class SecureResource<M> {
+public class SecureStash<M> {
 	
 	private Semaphore mutexSem = null;
 	private Semaphore dataSem  = null;
 	
 	private Queue<M> resources = null;
 	
-	public SecureResource(){
+	public SecureStash(){
 		resources = new LinkedList<M>();
 		mutexSem  = new Semaphore(1);
 		dataSem   = new Semaphore(0);

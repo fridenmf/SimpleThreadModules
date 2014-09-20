@@ -9,11 +9,11 @@ import java.util.List;
  *	Class for connecting (or just managing) modules.
  *	Provides methods for managing a list of modules.
  */
-public class ModuleConnector {
+public class ModuleManager {
 	
 	private ArrayList<Module> modules = null;
 	
-	public ModuleConnector(){
+	public ModuleManager(){
 		modules = new ArrayList<>();
 	}
 	

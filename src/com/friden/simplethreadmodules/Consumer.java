@@ -11,7 +11,7 @@ import java.util.concurrent.Semaphore;
  * Convenient for tasks that will run in parallel
  * Its sleeping when the data queue is empty
  */
-public abstract class ConsumerM<M> extends Module {
+public abstract class Consumer<M> extends Module {
 	
 	private Queue<M> queue = null;
 	
@@ -20,7 +20,7 @@ public abstract class ConsumerM<M> extends Module {
 	
 	protected abstract void onData(M data);
 	
-	public ConsumerM(boolean autostart){
+	public Consumer(boolean autostart){
 		super(autostart);
 		queue = new LinkedList<M>();
 		mutexSem = new Semaphore(1);
@@ -62,7 +62,7 @@ public abstract class ConsumerM<M> extends Module {
 	 * @param data to add to queue
 	 * @return this object to enable chaining of pushData
 	 */
-	public final ConsumerM<M> push(M data){
+	public final Consumer<M> push(M data){
 		mutexSem.acquireUninterruptibly();
 		queue.add(data);
 		mutexSem.release();

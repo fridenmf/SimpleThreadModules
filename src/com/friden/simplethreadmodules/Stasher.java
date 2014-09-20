@@ -1,10 +1,10 @@
 package com.friden.simplethreadmodules;
 
-public class Storer<M> extends ConsumerM<M> {
+public class Stasher<M> extends Consumer<M> {
 	
-	private SecureResource<M> stash = null;
+	private SecureStash<M> stash = null;
 	
-	public Storer(SecureResource<M> stash, boolean autostart){
+	public Stasher(SecureStash<M> stash, boolean autostart){
 		super(autostart);
 		this.stash = stash;
 	}

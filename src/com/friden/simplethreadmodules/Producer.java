@@ -1,10 +1,10 @@
 package com.friden.simplethreadmodules;
 
-public abstract class ProducerM<M> extends Module {
+public abstract class Producer<M> extends Module {
 	
-	private ConsumerM<M> nextModule = null;
+	private Consumer<M> nextModule = null;
 	
-	public ProducerM(ConsumerM<M> nextModule, boolean autostart){
+	public Producer(Consumer<M> nextModule, boolean autostart){
 		super(autostart);
 		this.nextModule = nextModule;
 	}
