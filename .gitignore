@@ -1,6 +1,6 @@
 *.class
-*.classpath
-*.project
+# *.classpath
+# *.project
 *.prefs
 
 # Mobile Tools for Java (J2ME)
