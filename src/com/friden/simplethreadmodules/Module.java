@@ -4,23 +4,63 @@ package com.friden.simplethreadmodules;
  * @author friden
  * 
  * Convenient class for a task that can be started and loops until finish is called
- *
  */
-public abstract class Module extends Thread {
+public abstract class Module {
 	
-	public boolean isRunning = false;
+	private Thread thread = null;
 	
-	public abstract void onStart();
+	private boolean isRunning    = false;
+	private boolean isRestarting = false;
+	
+	/** Called when start is called */
+	public void onStart(){};
 	
 	/** Should not be left empty as this will be called repeatedly **/
 	public abstract void onLoop();
 	
-	public abstract void onStop();
+	/** Called when stop is called **/
+	public void onStop(){};
 	
-	@Override
-	public void run() {
-		super.run();
-		
+	public Module(boolean autostart){
+		thread = new Thread(new LifeCycleRunnable());
+		if(autostart){
+			thread.start();
+		}
+	}
+	
+	private final class LifeCycleRunnable implements Runnable {
+		@Override
+		public void run() {
+			do{
+				isRestarting = false;
+				lifeCycle();
+			}while(isRestarting);
+		}
+	}
+	
+	public final void start(){
+		thread.start();
+	}
+	
+	/** Stops this module */
+	public final void stop(){
+		isRunning = false;
+		thread.interrupt();
+	}
+	
+	/** Breaks the life cycle, skipping onStop and starts over again with onStart 
+	 * This will return null to every process waiting on pullData if extended by DataModule */
+	public final void restart(){
+		isRestarting = true;
+		isRunning = false;
+		thread.interrupt();
+	}
+	
+	public final boolean isRunning(){
+		return isRunning;
+	}
+	
+	private final void lifeCycle(){
 		onStart();
 		
 		isRunning = true;
@@ -28,19 +68,10 @@ public abstract class Module extends Thread {
 			onLoop();
 		}
 		
-		onStop();
-		
-	}
-	
-	public void finish(boolean interrupt){
-		isRunning = false;
-		if(interrupt){
-			this.interrupt();
+		if(!isRestarting){
+			/* No recursive call to avoid building a huge method call hierarchy */
+			onStop();
 		}
-	}
-	
-	public boolean isFinished(){
-		return !isRunning;
 	}
 	
 }

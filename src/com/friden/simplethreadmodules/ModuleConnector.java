@@ -53,7 +53,7 @@ public class ModuleConnector {
 	
 	public void stopModules(){
 		for (int i = 0; i < modules.size(); i++) {
-			modules.get(i).finish(true);
+			modules.get(i).stop();
 		}
 	}
 

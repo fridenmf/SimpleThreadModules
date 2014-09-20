@@ -11,16 +11,17 @@ import java.util.concurrent.Semaphore;
  * Convenient for tasks that will run in parallel
  * Its sleeping when the data queue is empty
  */
-public abstract class DataModule<M extends Data<?>> extends Module {
+public abstract class ConsumerM<M> extends Module {
 	
 	private Queue<M> queue = null;
 	
 	private Semaphore mutexSem = null;
 	private Semaphore dataSem  = null;
 	
-	protected abstract void onData(M textMessage);
+	protected abstract void onData(M data);
 	
-	public DataModule(){
+	public ConsumerM(boolean autostart){
+		super(autostart);
 		queue = new LinkedList<M>();
 		mutexSem = new Semaphore(1);
 		dataSem = new Semaphore(0);
@@ -33,14 +34,17 @@ public abstract class DataModule<M extends Data<?>> extends Module {
 		}
 	}
 	
-	private M pullData(){
+	/**
+	 * @return Null if stop was called on this module before the module received any data
+	 */
+	private final M pullData(){
 		boolean successfulAcquire = false;
 		while(!successfulAcquire){
 			try {
 				dataSem.acquire();
 				successfulAcquire = true;
 			} catch (InterruptedException e) {
-				if(!isRunning){
+				if(!isRunning()){
 					return null;
 				}
 			}
@@ -53,12 +57,18 @@ public abstract class DataModule<M extends Data<?>> extends Module {
 		return data;
 	}
 	
-	public void pushData(M data){
+	/**
+	 * Fires onData
+	 * @param data to add to queue
+	 * @return this object to enable chaining of pushData
+	 */
+	public final ConsumerM<M> push(M data){
 		mutexSem.acquireUninterruptibly();
 		queue.add(data);
 		mutexSem.release();
 		
 		dataSem.release();
+		return this;
 	}
 
 }
