@@ -50,7 +50,6 @@ public class MachineExample {
 		
 	}
 	
-	
 	/** This worker converts integers to strings */
 	private static class ToStringWorker extends ConsumerProducerM<Integer, String>{
 		public ToStringWorker(ConsumerM<String> nextModule, boolean autostart) {
