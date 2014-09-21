@@ -28,7 +28,7 @@ public abstract class Consumer<M> extends Module {
 	}
 	
 	public final void onLoop(){
-		M data = pullData();
+		M data = get();
 		if(data != null){
 			onData(data);
 		}
@@ -37,7 +37,7 @@ public abstract class Consumer<M> extends Module {
 	/**
 	 * @return Null if stop was called on this module before the module received any data
 	 */
-	private final M pullData(){
+	private final M get(){
 		boolean successfulAcquire = false;
 		while(!successfulAcquire){
 			try {
@@ -60,9 +60,9 @@ public abstract class Consumer<M> extends Module {
 	/**
 	 * Fires onData
 	 * @param data to add to queue
-	 * @return this object to enable chaining of pushData
+	 * @return this object to enable chaining
 	 */
-	public final Consumer<M> push(M data){
+	public final Consumer<M> add(M data){
 		mutexSem.acquireUninterruptibly();
 		queue.add(data);
 		mutexSem.release();

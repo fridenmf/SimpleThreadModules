@@ -4,26 +4,31 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
-public class SecureStash<M> {
-	
+public class SecureStash<M> extends Consumer<M>{
+
 	private Semaphore mutexSem = null;
 	private Semaphore dataSem  = null;
-	
+
 	private Queue<M> resources = null;
-	
-	public SecureStash(){
+
+	public SecureStash(boolean autostart) {
+		super(false);
 		resources = new LinkedList<M>();
 		mutexSem  = new Semaphore(1);
 		dataSem   = new Semaphore(0);
+		if(autostart){
+			start();
+		}
 	}
-	
-	public void push(M resource){
+
+	@Override
+	protected void onData(M data) {
 		mutexSem.acquireUninterruptibly();
-		resources.add(resource);
+		resources.add(data);
 		mutexSem.release();
 		dataSem.release();
 	}
-	
+
 	public M pull(){
 		dataSem.acquireUninterruptibly();
 		mutexSem.acquireUninterruptibly();

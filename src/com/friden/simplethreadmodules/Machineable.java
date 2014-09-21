@@ -8,6 +8,9 @@ public interface Machineable<M, N> {
 	/** Feeds the machine but lefts the result in the machine */
 	public void add(M in);
 	
+	/** Feeds the maching but lefts the result in the machine */
+	public void add(M[] in);
+	
 	/** Waits for a result to arrive, and takes it when it does */
 	public N get();
 

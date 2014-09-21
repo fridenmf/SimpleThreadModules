@@ -36,7 +36,7 @@ public class CustomMachineExample {
 		private SecureStash<String> results = null;
 		
 		public IncDecIncToStringMachine(){
-			results = new SecureStash<>();
+			results = new SecureStash<>(true);
 			storer = new Stasher<String>(results, true);
 			w3 = new ToStringWorker(storer, true);
 			w2 = new IncrementWorker(w3, 1, true);
@@ -46,13 +46,20 @@ public class CustomMachineExample {
 		
 		@Override
 		public String make(Integer in){
-			w0.push(in);
+			w0.add(in);
 			return results.pull();
+		}
+		
+		@Override
+		public void add(Integer[] in) {
+			for (int i = 0; i < in.length; i++) {
+				add(in[i]);
+			}
 		}
 
 		@Override
 		public void add(Integer in) {
-			w0.push(in);
+			w0.add(in);
 		}
 
 		@Override

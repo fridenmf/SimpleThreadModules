@@ -16,7 +16,7 @@ public class Stasher<M> extends Consumer<M> {
 
 	@Override
 	protected void onData(M data) {
-		stash.push(data);
+		stash.add(data);
 	}
 
 }

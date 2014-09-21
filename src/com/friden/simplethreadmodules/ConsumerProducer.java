@@ -17,7 +17,7 @@ public abstract class ConsumerProducer<N, M> extends Consumer<N> {
 	
 	@Override
 	protected final void onData(N data) {
-		nextModule.push(process(data));
+		nextModule.add(process(data));
 	}
 
 }

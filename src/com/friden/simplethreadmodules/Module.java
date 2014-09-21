@@ -13,13 +13,13 @@ public abstract class Module {
 	private boolean isRestarting = false;
 	
 	/** Called when start is called */
-	public void onStart(){};
+	protected void onStart(){};
 	
 	/** Should not be left empty as this will be called repeatedly **/
-	public abstract void onLoop();
+	protected abstract void onLoop();
 	
 	/** Called when stop is called **/
-	public void onStop(){};
+	protected void onStop(){};
 	
 	public Module(boolean autostart){
 		thread = new Thread(new LifeCycleRunnable());
