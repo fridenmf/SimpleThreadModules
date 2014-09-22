@@ -1,8 +1,8 @@
 package com.friden.simplethreadmodules.examples;
 
-import com.friden.simplethreadmodules.ConsumerProducer;
-import com.friden.simplethreadmodules.MachineFactory;
-import com.friden.simplethreadmodules.Machine;
+import com.friden.simplethreadmodules.core.ConsumerProducer;
+import com.friden.simplethreadmodules.core.Machine;
+import com.friden.simplethreadmodules.core.MachineFactory;
 
 import static com.friden.simplethreadmodules.examples.WorkerExamples.*;
 

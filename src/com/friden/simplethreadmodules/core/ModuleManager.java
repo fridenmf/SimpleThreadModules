@@ -1,4 +1,4 @@
-package com.friden.simplethreadmodules;
+package com.friden.simplethreadmodules.core;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.friden.simplethreadmodules;
+package com.friden.simplethreadmodules.core;
 
 public class Machine<M, N> implements Machineable<M, N>{
 	

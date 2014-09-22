@@ -1,4 +1,4 @@
-package com.friden.simplethreadmodules;
+package com.friden.simplethreadmodules.core;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

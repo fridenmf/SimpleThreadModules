@@ -1,4 +1,4 @@
-package com.friden.simplethreadmodules;
+package com.friden.simplethreadmodules.core;
 
 /** 
  * Adds received data to the provided stash.

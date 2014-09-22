@@ -1,9 +1,9 @@
 package com.friden.simplethreadmodules.examples;
 
-import com.friden.simplethreadmodules.Consumer;
-import com.friden.simplethreadmodules.SecureStash;
-import com.friden.simplethreadmodules.Unstasher;
-import com.friden.simplethreadmodules.WorkerPool;
+import com.friden.simplethreadmodules.core.Consumer;
+import com.friden.simplethreadmodules.core.SecureStash;
+import com.friden.simplethreadmodules.core.Unstasher;
+import com.friden.simplethreadmodules.core.WorkerPool;
 
 public class WorkerPoolExample {
 	

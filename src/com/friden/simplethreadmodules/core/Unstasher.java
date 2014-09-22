@@ -1,4 +1,4 @@
-package com.friden.simplethreadmodules;
+package com.friden.simplethreadmodules.core;
 
 public abstract class Unstasher<M, N> extends Producer<N> implements Copyable<Unstasher<M, N>> {
 

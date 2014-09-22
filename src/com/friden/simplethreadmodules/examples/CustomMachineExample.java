@@ -1,8 +1,8 @@
 package com.friden.simplethreadmodules.examples;
 
-import com.friden.simplethreadmodules.Machineable;
-import com.friden.simplethreadmodules.SecureStash;
-import com.friden.simplethreadmodules.Stasher;
+import com.friden.simplethreadmodules.core.Machineable;
+import com.friden.simplethreadmodules.core.SecureStash;
+import com.friden.simplethreadmodules.core.Stasher;
 
 import static com.friden.simplethreadmodules.examples.WorkerExamples.*;
 
