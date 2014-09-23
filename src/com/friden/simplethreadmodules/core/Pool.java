@@ -2,12 +2,12 @@ package com.friden.simplethreadmodules.core;
 
 import java.util.ArrayList;
 
-public class WorkerPool<M, N> implements Machineable<M, N>{
+public class Pool<M extends StashConsumer<M,N,O>, N, O> implements Machineable<N,O>{
 	
-	private SecureStash<M> inStash  = null;
-	private SecureStash<N> outStash = null;
+	private Stash<N> inStash  = null;
+	private Stash<O> outStash = null;
 	
-	private ArrayList<Unstasher<M, N>> workers = null;
+	private ArrayList<StashConsumer<M,N,O>> workers = null;
 	
 	/**
 	 * Takes an Unstasher with an implemented produce function. 
@@ -16,10 +16,10 @@ public class WorkerPool<M, N> implements Machineable<M, N>{
 	 * @param roleModel
 	 * @param workers
 	 */
-	public WorkerPool(Unstasher<M, N> roleModel, int numWorkers, boolean autostart){
-		inStash  = new SecureStash<>(true);
-		outStash = new SecureStash<>(true);
-		workers  = new ArrayList<Unstasher<M, N>>();
+	public Pool(StashConsumer<M,N,O> roleModel, int numWorkers, boolean autostart){
+		inStash  = new Stash<>(true);
+		outStash = new Stash<>(true);
+		workers  = new ArrayList<StashConsumer<M,N,O>>();
 		for (int i = 0; i < numWorkers; i++) {
 			workers.add(roleModel.copy().reconstruct(inStash, outStash, false));
 		}
@@ -41,26 +41,19 @@ public class WorkerPool<M, N> implements Machineable<M, N>{
 	}
 	
 	@Override
-	public N make(M in) {
+	public O make(N in) {
 		add(in);
 		return get();
 	}
 	
 	@Override
-	public void add(M[] in) {
-		for (int i = 0; i < in.length; i++) {
-			add(in[i]);
-		}
-	}
-
-	@Override
-	public void add(M in) {
+	public void add(N in) {
 		inStash.add(in);
 	}
 
 	@Override
-	public N get() {
-		return outStash.pull();
+	public O get() {
+		return outStash.get();
 	}
 
 }

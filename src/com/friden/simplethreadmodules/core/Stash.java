@@ -4,14 +4,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
-public class SecureStash<M> extends Consumer<M>{
+public class Stash<M> extends Consumer<M>{
 
 	private Semaphore mutexSem = null;
 	private Semaphore dataSem  = null;
 
 	private Queue<M> resources = null;
 
-	public SecureStash(boolean autostart) {
+	public Stash(boolean autostart) {
 		super(false);
 		resources = new LinkedList<M>();
 		mutexSem  = new Semaphore(1);
@@ -29,7 +29,7 @@ public class SecureStash<M> extends Consumer<M>{
 		dataSem.release();
 	}
 
-	public M pull(){
+	public M get(){
 		dataSem.acquireUninterruptibly();
 		mutexSem.acquireUninterruptibly();
 		M resource = resources.poll();

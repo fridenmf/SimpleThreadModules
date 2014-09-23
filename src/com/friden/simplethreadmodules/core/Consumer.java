@@ -21,10 +21,13 @@ public abstract class Consumer<M> extends Module {
 	protected abstract void onData(M data);
 	
 	public Consumer(boolean autostart){
-		super(autostart);
+		super(false);
 		queue = new LinkedList<M>();
 		mutexSem = new Semaphore(1);
 		dataSem = new Semaphore(0);
+		if(autostart){
+			start();
+		}
 	}
 	
 	public final void onLoop(){

@@ -5,8 +5,11 @@ public abstract class Producer<M> extends Module {
 	protected Consumer<M> nextModule = null;
 	
 	public Producer(Consumer<M> nextModule, boolean autostart){
-		super(autostart);
+		super(false);
 		this.nextModule = nextModule;
+		if(autostart){
+			start();
+		}
 	}
 	
 	protected abstract M produce();
