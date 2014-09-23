@@ -149,7 +149,7 @@ First bump is from:
       System.out.println(i.toString());
     }
 
-Second bump is from this framework. So, enough of pretty images, what if we want to make something that consists of alot of modules, but behaves like one big machine, where you feed it with things, and it spits out the result in the other end? To do that we need a new concept since we can't just let the result float in the air until we pick it up. Also if a maching processes 10 thins and you only pick up one, you dont want the other 9 to be wasted right? We need a stash!
+Second bump is from this framework. So, enough of pretty images, what if we want to make something that consists of alot of modules, but behaves like one big machine, where you feed it with things, and it spits out the result in the other end? To do that we need a new concept since we can't just let the result float in the air until we pick it up. Also if a maching processes 10 things and you only pick up one, you don't want the other 9 to be wasted right? We need a stash!
 
 A stash is simply a Consumer, that stores stuff from Producers, simple right? When we try to take something from a stash that is empty, the process that tries to get from the stash will wait until there is something there. Now we can just remove our IntPrinter and replace it with a stash, and also remove our producer, to kind of have a machine that accepts input and produces output. I also added another incrementer to make things more interesting.
 
@@ -198,10 +198,11 @@ That looks neat, now lets take the last step of making this into a machine!
           System.out.println(machine.make(i));
         }
 
-        /* Put ten things into the machine, collect all results */
+        /* Put ten things into the machine */
         for (int i = 0; i < 10; i++) {
           machine.add(i);
         }
+        /* Collect all results */
         for (int i = 0; i < 10; i++) {
           System.out.println(machine.get());
         }
@@ -297,7 +298,7 @@ Neat! As i happens to be, the framework contains a class MachineFactory, which c
 
 Ok, that was easy, and short! Good, now we can make machines, lets take about the performance of make vs add/get for a while. Lets say that we had 10 workers in our machine, and each worker took one second to process something, then it would take the machine 10 seconds to produce something from the moment it gets the input. Using the make function 10 times would take 100 seconds, since we wait until the whole machine is done before feeding it with the next input.
 
-Now consider the add/get approach. The first product will indeed take 10 seconds, but the second product would arrive the second after the first one. We could then make 2 products in 11 seconds. If we feed it with 3 products it could do that in 12 seconds. 4 in 13, 5 in 14, 6 in 15. 10 Items will take 20 seconds, in stead of 100 seconds that the make function would accomplice. That is 5 times as fast, as long as you have threads for it. 20 products with make: 200 seconds. 20 products with add/get: 30 seconds, which is about 6.6 times faster. So if you have a program where it's possible to use add/get instead of make, then do it!
+Now consider the add/get approach. The first product will indeed take 10 seconds, but the second product would arrive the second after the first one since all workers do stuff in parallel. We could then make 2 products in 11 seconds. If we feed it with 3 products it could do that in 12 seconds. 4 in 13, 5 in 14, 6 in 15. 10 Items will take 20 seconds, in stead of 100 seconds that the make function would accomplice. That is 5 times as fast, as long as you have threads for it. 20 products with make: 200 seconds. 20 products with add/get: 30 seconds, which is about 6.6 times faster. So if you have a program where it's possible to use add/get instead of make, then do it!
 
 Now, more interesting stuff. We have seen Producers, Consumers, Stashes, Machines, what could there possible be more to add? Pools?
 
@@ -348,7 +349,7 @@ An StashConsumer is simply a kind of consumer, but that can only consume stuff f
       }
     }
 
-So that is basically our pool. It has three StashIncrementers taking from the same stash, and puts the result in the same stash. Neat. Now we do the same thing with the provided Pool class:
+So that is basically our pool. It has three StashIncrementers taking from the same stash, and puts the result in the same stash. Neat. Now we do the same thing, but with 10 workers and with the provided Pool class:
 
     import com.friden.simplethreadmodules.core.Consumer;
     import com.friden.simplethreadmodules.core.Stash;
