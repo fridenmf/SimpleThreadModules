@@ -5,11 +5,11 @@ Simple Java framework for easy managing of threads with capabilities of messagin
 
 Look for examples in /src/com/friden/simplethreadmodules/examples
 
-In all examples in this readme I've excluded module.stop() just to make the code cleaner, but of course you can stop the modules to let your program terminate. Also you can start a module by false instead of true to not automatically start it, then you can start it later with module.start().
+In all examples in this readme I've excluded module.stop() just to make the code cleaner, but of course you can stop the modules to let your program terminate. Also you can start a module by a false constructor instead of true to not automatically start it, then you can start it later with module.start().
 
 ## Insallation (Instructions for Eclipse only at the moment)
 
-clone this repo, then open Eclipse.
+Clone this repo, then open Eclipse.
 
 File -> Import -> General -> Existing Projects into Workspace
 
