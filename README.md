@@ -7,6 +7,26 @@ Look for examples in /src/com/friden/simplethreadmodules/examples
 
 In all examples in this readme I've excluded module.stop() just to make the code cleaner, but of course you can stop the modules to let your program terminate. Also you can start a module by false instead of true to not automatically start it, then you can start it later with module.start().
 
+## Insallation (Instructions for Eclipse only at the moment)
+
+clone this repo, then open Eclipse.
+
+File -> Import -> General -> Existing Projects into Workspace
+
+Choose the repo and click finish.
+
+Now create a new project using:
+File -> New -> Java Project
+
+Name it, and click finish.
+
+Then select this framework as a library by:
+Rightclick on your new project -> Properties -> Java Build Path -> Projects -> Add
+
+Select this framework and then click Ok, followed by Ok.
+
+Now you can start using this framework.
+
 ## Tutorial
 
 A modules i basically a thing that runs on its own thread, and that can handle data of some type.
