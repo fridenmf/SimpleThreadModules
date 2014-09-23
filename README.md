@@ -21,7 +21,7 @@ File -> New -> Java Project
 Name it, and click finish.
 
 Then select this framework as a library by:
-Rightclick on your new project -> Properties -> Java Build Path -> Projects -> Add
+Right click on your new project -> Properties -> Java Build Path -> Projects -> Add
 
 Select this framework and then click Ok, followed by Ok.
 
@@ -29,7 +29,7 @@ Now you can start using this framework.
 
 ## Tutorial
 
-A modules i basically a thing that runs on its own thread, and that can handle data of some type.
+A module i basically a thing that runs on its own thread, and that can handle data of some type.
 All modules in this framework are generic.
 
 To make it easy to reason within my framework, there are only two kinds of modules:
