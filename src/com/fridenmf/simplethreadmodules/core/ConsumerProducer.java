@@ -1,4 +1,4 @@
-package com.friden.simplethreadmodules.core;
+package com.fridenmf.simplethreadmodules.core;
 
 /** @author friden
  *  @param <N> Type of data to receive

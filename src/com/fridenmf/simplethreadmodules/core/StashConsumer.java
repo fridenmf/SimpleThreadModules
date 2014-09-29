@@ -1,4 +1,4 @@
-package com.friden.simplethreadmodules.core;
+package com.fridenmf.simplethreadmodules.core;
 
 public abstract class StashConsumer<M,N,O> extends Producer<O> implements Copyable<M> {
 

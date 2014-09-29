@@ -1,25 +1,24 @@
-package com.friden.simplethreadmodules.examples;
+package com.fridenmf.simplethreadmodules.examples;
 
-import com.friden.simplethreadmodules.core.Consumer;
-import com.friden.simplethreadmodules.core.Stash;
-import com.friden.simplethreadmodules.core.StashConsumer;
+import com.fridenmf.simplethreadmodules.core.Consumer;
+import com.fridenmf.simplethreadmodules.core.Pool;
+import com.fridenmf.simplethreadmodules.core.Stash;
+import com.fridenmf.simplethreadmodules.core.StashConsumer;
 
-public class StashConsumerExample {
+public class IncPoolExample {
 	
 	public static void main(String[] arg){
-		Stash<Integer> in  = new Stash<>(true);
-		Stash<Integer> out = new Stash<>(true);
 		
-		StashIncrementer si0 = new StashIncrementer(in, out, true);
-		StashIncrementer si1 = new StashIncrementer(in, out, true);
-		StashIncrementer si2 = new StashIncrementer(in, out, true);
+		StashIncrementer stashIncer = new StashIncrementer(null, null, false);
+		Pool<StashIncrementer, Integer, Integer> pool = new Pool<>(stashIncer, 10, true);
 		
 		for (int i = 0; i < 20; i++) {
-			in.add(i);
+			pool.add(1);
 		}
 		for (int i = 0; i < 20; i++) {
-			System.out.println(out.get());
+			System.out.println(pool.get());
 		}
+		
 	}
 	
 	private static class StashIncrementer extends StashConsumer<StashIncrementer, Integer, Integer> {
@@ -41,4 +40,5 @@ public class StashConsumerExample {
 			return new StashIncrementer(stash, nextModule, false);
 		}
 	}
+
 }

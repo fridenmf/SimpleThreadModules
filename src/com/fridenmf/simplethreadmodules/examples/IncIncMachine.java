@@ -1,9 +1,9 @@
-package com.friden.simplethreadmodules.examples;
+package com.fridenmf.simplethreadmodules.examples;
 
-import com.friden.simplethreadmodules.core.Consumer;
-import com.friden.simplethreadmodules.core.ConsumerProducer;
-import com.friden.simplethreadmodules.core.Machine;
-import com.friden.simplethreadmodules.core.MachineFactory;
+import com.fridenmf.simplethreadmodules.core.Consumer;
+import com.fridenmf.simplethreadmodules.core.ConsumerProducer;
+import com.fridenmf.simplethreadmodules.core.Machine;
+import com.fridenmf.simplethreadmodules.core.MachineFactory;
 
 public class IncIncMachine {
 	

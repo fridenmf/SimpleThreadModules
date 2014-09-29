@@ -1,30 +1,28 @@
-package com.friden.simplethreadmodules.core;
+package com.fridenmf.simplethreadmodules.core;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
-public class Stash<M> extends Consumer<M>{
+public class Resource<M> extends Consumer<M>{
 
 	private Semaphore mutexSem = null;
 	private Semaphore dataSem  = null;
 
-	private Queue<M> resources = null;
+	private M resource = null;
 
-	public Stash(boolean autostart) {
+	public Resource(M resource, boolean autostart) {
 		super(false);
-		resources = new LinkedList<M>();
-		mutexSem  = new Semaphore(1);
-		dataSem   = new Semaphore(0);
+		this.resource = resource;
+		this.mutexSem = new Semaphore(1);
+		this.dataSem  = new Semaphore(0);
 		if(autostart){
 			start();
 		}
 	}
 
 	@Override
-	protected void onData(M data) {
+	protected void onData(M resource) {
 		mutexSem.acquireUninterruptibly();
-		resources.add(data);
+		this.resource = resource; 
 		mutexSem.release();
 		dataSem.release();
 	}
@@ -32,7 +30,7 @@ public class Stash<M> extends Consumer<M>{
 	public M get(){
 		dataSem.acquireUninterruptibly();
 		mutexSem.acquireUninterruptibly();
-		M resource = resources.poll();
+		M resource = this.resource;
 		mutexSem.release();
 		return resource;
 	}

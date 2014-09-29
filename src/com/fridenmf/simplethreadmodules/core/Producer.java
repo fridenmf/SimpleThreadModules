@@ -1,4 +1,4 @@
-package com.friden.simplethreadmodules.core;
+package com.fridenmf.simplethreadmodules.core;
 
 public abstract class Producer<M> extends Module {
 	

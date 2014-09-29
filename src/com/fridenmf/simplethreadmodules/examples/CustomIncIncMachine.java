@@ -1,9 +1,9 @@
-package com.friden.simplethreadmodules.examples;
+package com.fridenmf.simplethreadmodules.examples;
 
-import com.friden.simplethreadmodules.core.Consumer;
-import com.friden.simplethreadmodules.core.ConsumerProducer;
-import com.friden.simplethreadmodules.core.Machineable;
-import com.friden.simplethreadmodules.core.Stash;
+import com.fridenmf.simplethreadmodules.core.Consumer;
+import com.fridenmf.simplethreadmodules.core.ConsumerProducer;
+import com.fridenmf.simplethreadmodules.core.Machineable;
+import com.fridenmf.simplethreadmodules.core.Stash;
 
 public class CustomIncIncMachine {
 	

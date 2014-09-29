@@ -1,8 +1,8 @@
-package com.friden.simplethreadmodules.examples;
+package com.fridenmf.simplethreadmodules.examples;
 
-import com.friden.simplethreadmodules.core.Consumer;
-import com.friden.simplethreadmodules.core.ConsumerProducer;
-import com.friden.simplethreadmodules.core.Producer;
+import com.fridenmf.simplethreadmodules.core.Consumer;
+import com.fridenmf.simplethreadmodules.core.ConsumerProducer;
+import com.fridenmf.simplethreadmodules.core.Producer;
 
 public class ZerosIncPrinter {
 	
