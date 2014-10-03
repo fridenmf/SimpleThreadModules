@@ -3,11 +3,11 @@
 
 Simple Java framework for easy managing of threads with capabilities of messaging between them.
 
-Look for examples in /src/com/friden/simplethreadmodules/examples
+Look for examples in /src/com/fridenmf/simplethreadmodules/examples
 
-In all examples in this readme I've excluded module.stop() just to make the code cleaner, but of course you can stop the modules to let your program terminate. Also you can start a module by a false constructor instead of true to not automatically start it, then you can start it later with module.start().
+I've excluded module.stop() from all examples in this readme just to make the code cleaner, but of course you can stop the modules to let your program terminate. Also, all examples will use 'true' as a parameter to the module constructor, which automatically starts the module after creation. By using 'false' instead, you can start it later with module.start().
 
-## Insallation (Instructions for Eclipse only at the moment)
+## Installation (Instructions for Eclipse only at the moment)
 
 Clone this repo, then open Eclipse.
 
@@ -15,29 +15,28 @@ File -> Import -> General -> Existing Projects into Workspace
 
 Choose the repo and click finish.
 
-Now create a new project using:
+Now create your new project using:
 File -> New -> Java Project
 
-Name it, and click finish.
+Name it and click finish.
 
 Then select this framework as a library by:
 Right click on your new project -> Properties -> Java Build Path -> Projects -> Add
 
-Select this framework and then click Ok, followed by Ok.
+Select this framework and then click OK, followed by OK.
 
 Now you can start using this framework.
 
 ## Tutorial
 
-A module i basically a thing that runs on its own thread, and that can handle data of some type.
-All modules in this framework are generic.
+A _module_ is basically a thing that runs on its own thread, and that can handle data of some type. All modules in this framework are generic.
 
 To make it easy to reason within my framework, there are only two kinds of modules:
 
-Consumers - A module that waits for values of some kind, and does some calculation based on this value. <br>
-Producers - A module that produces data of some kind, and gives the result to a Consumer.
+Consumer - A module that waits for data of some kind, and does some calculation based on this value. <br/>
+Producer - A module that produces data of some kind, and gives the result to a Consumer.
 
-This can be used to make a lots of programs, for example a program that have a producer that creates 0's and a consumer that prints them.
+This can be used to make a lot of programs, for example a program that has a producer that creates 0's and a consumer that prints them!
 
     import com.friden.simplethreadmodules.core.Consumer;
     import com.friden.simplethreadmodules.core.Producer;
@@ -70,7 +69,6 @@ This can be used to make a lots of programs, for example a program that have a p
           return 0;
         }
       }
-
     }
 
 Well now this may seem like a bad example, why just not make a while loop?
@@ -79,17 +77,17 @@ Well now this may seem like a bad example, why just not make a while loop?
       System.out.println(0);
     }
 
-The answer, It's not threadded. Take a look at this image:
+The answer, it's not threaded. Take a look at this image:
 
 ![Pretty image 0](/images/image0.jpg)
 
-The first bump is a program running the while loop, the second one is the one running with this framework. Even such a simple program like this run with close to 100% processor utilization on my test computer while a "normal" program only utilizes around 50%
+The first bump is a program running the while loop, the second one is the one running with this framework. Even a simple program like this run with close to 100% processor utilization while a "normal" program only utilizes around 50%.
 
-Now lets make something more fun. What if we wanted to add another module between these two, lets say a module that simply increments an integer before printing it. Of course this is not normally something you want to thread, you would just add 1 before printing it in the printer, but for the sake of this tutorial we do this anyways.
+Now let's make something more fun. What if we wanted to add another module between these two? Say a module that simply increments an integer before printing it. Of course, this is not normally something you want to thread, you would just add 1 before printing it in the printer, but for the sake of this tutorial we do this anyway.
 
-So, we want to have something in the middle that is both a consumer and a producer, how do we do that since we can't extend two things? That's where the class ConsumerProducer comes in! (I know, its a bad name, tell me if you have a better name for it, and I'll change it).
+So, we want to have something in the middle that is both a consumer and a producer. We can't extend two things, so how do we make such a thing? That's where the class ConsumerProducer comes in! (I know, its a bad name, tell me if you have a better name for it, and I'll change it.)
 
-A ConsumerProducer is something that waits for values, processes them, and then gives it to a consumer. Lets see some code:
+A ConsumerProducer is something that waits for data, processes it, and then gives it to a consumer. Let's see some code:
 
     import com.friden.simplethreadmodules.core.Consumer;
     import com.friden.simplethreadmodules.core.ConsumerProducer;
@@ -137,11 +135,11 @@ A ConsumerProducer is something that waits for values, processes them, and then 
       }
     }
 
-And once again a pretty image:
+And once again, a pretty image:
 
 ![Pretty image 1](/images/image1.jpg)
 
-First bump is from:
+The first bump is from:
 
     while(true){
       Integer i = 0;
@@ -149,9 +147,9 @@ First bump is from:
       System.out.println(i.toString());
     }
 
-Second bump is from this framework. So, enough of pretty images, what if we want to make something that consists of alot of modules, but behaves like one big machine, where you feed it with things, and it spits out the result in the other end? To do that we need a new concept since we can't just let the result float in the air until we pick it up. Also if a maching processes 10 things and you only pick up one, you don't want the other 9 to be wasted right? We need a stash!
+The second bump is from this framework. So, enough of pretty images. What if we want to make something that consists of a lot of modules, but behaves like one big machine, where you feed it with things, and it spits out the result at the other end? To do that, we need a new concept since we can't just let the result float in the air until we pick it up. Also, if a machine processes ten things and you only pick up one, you don't want the other nine to be wasted right? We need a stash!
 
-A stash is simply a Consumer, that stores stuff from Producers, simple right? When we try to take something from a stash that is empty, the process that tries to get from the stash will wait until there is something there. Now we can just remove our IntPrinter and replace it with a stash, and also remove our producer, to kind of have a machine that accepts input and produces output. I also added another incrementer to make things more interesting.
+A Stash is simply a consumer that stores stuff from producers. Simple, right? When we try to take something from a stash that is empty, the process that tries to get from the stash will wait until there is something there. Now we can just remove our IntPrinter and replace it with a stash, and also remove our producer, to end up with a kind of machine that accepts input and produces output. I also added another incrementer to make things more interesting.
 
     import com.friden.simplethreadmodules.core.Consumer;
     import com.friden.simplethreadmodules.core.ConsumerProducer;
@@ -180,7 +178,7 @@ A stash is simply a Consumer, that stores stuff from Producers, simple right? Wh
       }
     }
 
-That looks neat, now lets take the last step of making this into a machine!
+That looks neat. Now, let's take the last step of making this into a machine!
 
     import com.friden.simplethreadmodules.core.Consumer;
     import com.friden.simplethreadmodules.core.ConsumerProducer;
@@ -253,7 +251,7 @@ That looks neat, now lets take the last step of making this into a machine!
       }
     }
 
-Neat! As i happens to be, the framework contains a class MachineFactory, which can do this for you. So lets try that instead:
+Neat! As it happens to be, the framework contains a class MachineFactory, which can do all of this for you. So let's try that instead:
 
     import com.friden.simplethreadmodules.core.Consumer;
     import com.friden.simplethreadmodules.core.ConsumerProducer;
@@ -296,15 +294,15 @@ Neat! As i happens to be, the framework contains a class MachineFactory, which c
       }
     }
 
-Ok, that was easy, and short! Good, now we can make machines, lets take about the performance of make vs add/get for a while. Lets say that we had 10 workers in our machine, and each worker took one second to process something, then it would take the machine 10 seconds to produce something from the moment it gets the input. Using the make function 10 times would take 100 seconds, since we wait until the whole machine is done before feeding it with the next input.
+Ok, that was easy, and short! Good, now we can make machines. Let's talk about the performance of _make_ vs _add/get_ for a while. Let's say that we had 10 workers in our machine, and each worker took one second to process something. Then it would take the machine 10 seconds to produce something from the moment it gets the input. Using the make function 10 times would take 100 seconds, since we wait until the whole machine is done before feeding it with the next input.
 
-Now consider the add/get approach. The first product will indeed take 10 seconds, but the second product would arrive the second after the first one since all workers do stuff in parallel. We could then make 2 products in 11 seconds. If we feed it with 3 products it could do that in 12 seconds. 4 in 13, 5 in 14, 6 in 15. 10 Items will take 20 seconds, in stead of 100 seconds that the make function would accomplice. That is 5 times as fast, as long as you have threads for it. 20 products with make: 200 seconds. 20 products with add/get: 30 seconds, which is about 6.6 times faster. So if you have a program where it's possible to use add/get instead of make, then do it!
+Now consider the add/get approach. The first product will indeed take 10 seconds, but the second product would arrive the second after the first one since all workers do stuff in parallel. We could then make 2 products in 11 seconds. If we feed it with 3 products it would be done in 12 seconds. 4 in 13, 5 in 14, 6 in 15. 10 items will take 19 seconds, compared to the make method's 100 seconds. That is five times as fast, as long as you have threads for it. 20 products with make: 200 seconds. 20 products with add/get: 29 seconds, which is about 6.6 times faster. So, if you have a program where it's possible to use add/get instead of make, then do it!
 
-Now, more interesting stuff. We have seen Producers, Consumers, Stashes, Machines, what could there possible be more to add? Pools?
+Now, more interesting stuff! We have seen Producers, Consumers, Stashes, Machines, what more could there possible be to add? Pools?
 
-A Pool is kind of a resource with workers, ready to do your bidding. To a pool, you could add 10 Incrementers, and then just feed the pool with values. These incoming values will be put in a Stash from which the workers in the pool will grab values, work on them, and then put them in another Stash of results. To do this we need to introduce a new class, namely the StashConsumer.
+A Pool is kind of a resource with workers, ready to do your bidding. You could add 10 incrementers to a pool, and then just feed the pool with values. The incoming values will be put in a stash from which the workers in the pool will grab values, work on them, and then put them in another stash of results. To do this we need to introduce a new class, namely the StashConsumer.
 
-An StashConsumer is simply a kind of consumer, but that can only consume stuff from Stashes. It's also special in one more way, it can clone itself, to make the implementation of the Pool easier, lets try it first:
+A StashConsumer is a consumer that can only consume stuff from stashes. It's also special in one more way: it can clone itself, in order to make the implementation of the pool easier. Let's try it first:
 
     import com.friden.simplethreadmodules.core.Consumer;
     import com.friden.simplethreadmodules.core.Stash;
@@ -349,7 +347,7 @@ An StashConsumer is simply a kind of consumer, but that can only consume stuff f
       }
     }
 
-So that is basically our pool. It has three StashIncrementers taking from the same stash, and puts the result in the same stash. Neat. Now we do the same thing, but with 10 workers and with the provided Pool class:
+So, that's basically our pool. It has three StashIncrementers taking from a common stash, putting the results in another common stash. Neat! Now we do the same thing, but with 10 workers and with the provided Pool class:
 
     import com.friden.simplethreadmodules.core.Consumer;
     import com.friden.simplethreadmodules.core.Stash;
@@ -393,4 +391,4 @@ So that is basically our pool. It has three StashIncrementers taking from the sa
       }
     }
 
-Ok, this is what this framework has at the moment, but it will probably be extended by lots of more stuff. I'm gladly accepting feedback, specially if you have a proposal for a new class that would add some awesome functionality. I will post contact information here shortly. Now go play with the framework^^
+Ok, this is what this framework has at the moment, but it will probably be extended with lots of more stuff. I'm gladly accepting feedback, especially if you have a proposal for a new class that would add some awesome functionality. I will post contact information here shortly. Now go play with the framework. ^^
