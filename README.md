@@ -27,6 +27,20 @@ Select this framework and then click OK, followed by OK.
 
 Now you can start using this framework.
 
+## TLDR Tutorial
+
+Color coding: All red boxes are Consumers or has a Consumer as superclass, Blue boxes are Producers or have a Producer as superclass, and purple boxes are ConsumerProducers, or have them as superclass.
+
+Consumer: Consumes data and performs action on each receive<br/>
+Producer: Produces data and gives the result to a consumer<br/>
+ConsumerProducer: Combined Consumer and Producer<br/>
+
+Stash: A consumer that stores the incoming data, instead of performing an action<br/>
+StashConsumer: A Consumer that takes data from a Stash<br/>
+StashConsumerProducer: Combined StashConsumer and Producer<br/>
+
+![TLDR Tutorial image 0](/images/tldr.png)
+
 ## Tutorial
 
 A _module_ is basically a thing that runs on its own thread, and that can handle data of some type. All modules in this framework are generic.
@@ -81,7 +95,7 @@ The answer, it's not threaded. Take a look at this image:
 
 ![Pretty image 0](/images/image0.jpg)
 
-The first bump is a program running the while loop, the second one is the one running with this framework. Even a simple program like this run with close to 100% processor utilization while a "normal" program only utilizes around 50%.
+This illustrates two 15 second runs of the program where the first bump is a program running the while loop, the second one is the one running with this framework. Even a simple program like this run with close to 100% processor utilization while a "normal" program only utilizes around 50%.
 
 Now let's make something more fun. What if we wanted to add another module between these two? Say a module that simply increments an integer before printing it. Of course, this is not normally something you want to thread, you would just add 1 before printing it in the printer, but for the sake of this tutorial we do this anyway.
 
