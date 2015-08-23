@@ -29,9 +29,9 @@ Now you can start using this framework.
 
 ## TLDR Tutorial
 
-Color coding: All red boxes are Consumers or has a Consumer as superclass, Blue boxes are Producers or have a Producer as superclass, and purple boxes are ConsumerProducers, or have them as superclass.
+Color coding: All red boxes are Consumers or has a Consumer as superclass, Blue boxes are Producers or have a Producer as superclass, and purple boxesare ConsumerProducers, or have them as superclass.
 
-Consumer: Consumes data and performs action on each receive<br/>
+Consumer: Consumes data and performs action on each receive<br/>
 Producer: Produces data and gives the result to a consumer<br/>
 ConsumerProducer: Combined Consumer and Producer<br/>
 
